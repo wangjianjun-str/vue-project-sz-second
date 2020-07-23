@@ -29,6 +29,8 @@ const actions = {
       //把用户的信息报存起来，为了自动登录（下次再来还可以找到登录状态的用户信息）
       localStorage.setItem('USERINFO_KEY',JSON.stringify(result.data))
       commit("RECEIVEUSERINFO",result.data)
+    }else{
+      return Promise.reject(new Error('请求登录失败'))
     }
   },
   //退出登录更新数据

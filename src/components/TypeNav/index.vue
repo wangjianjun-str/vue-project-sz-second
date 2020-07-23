@@ -11,7 +11,7 @@
               
               <!-- <router-link :to="{name:'search',query:{category1Id:c1.categoryId,categoryName:c1.categoryName}}">{{c1.categoryName}}</router-link> -->
               <!-- <a href="javascript:;" @click="$router.push({name:'search',query:{category1Id:c1.categoryId,categoryName:c1.categoryName}})">{{c1.categoryName}}</a> -->
-              <a  href="javascript:;" :data-categoryName="c1.categoryName" :data-category2Id="c1.categoryId" >{{c1.categoryName}}</a>
+              <a  href="javascript:;" :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId" >{{c1.categoryName}}</a>
             </h3>
             <div class="item-list clearfix">
               <div class="subitem">
@@ -110,7 +110,12 @@ export default {
         if(params){
           localtion.params = params
         }
-        this.$router.push(localtion)
+        //看是否从首页到search页
+        if(this.$route.path != '/home'){
+          this.$router.replace(localtion)
+        }else{
+          this.$router.push(localtion)
+        }
        }
     }
   },

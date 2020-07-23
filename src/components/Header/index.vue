@@ -6,7 +6,13 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          <p v-if="userInfo.name">
+            <!-- <router-link to="/login">{{userInfo.username}}</router-link> -->
+            <a href="javascript:;">{{userInfo.name}}</a>
+            <!-- <router-link to="/register" class="register"></router-link> -->
+            <a href="javascript:;" class="register" @click='logout'>退出登录</a>
+          </p>
+           <p v-else>
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <!-- <a href="###">登录</a> -->
@@ -44,6 +50,7 @@
 </template>
 
 <script>
+import {mapState} from "vuex"
 export default {
   name: "Header",
   data(){
@@ -52,7 +59,18 @@ export default {
       localtion:""
     }
   },
+  mounted(){
+    this.$bus.$on("clearKeyword",this.clearKeyword)
+  },
   methods:{
+   async logout(){
+      try {
+         await this.$store.dispatch('uerLogout')
+         this.$router.push('/home')
+      } catch (error) {
+        alert(error.message)
+      }
+    },
     toSearch(){
       //点击搜索按钮的时候，我们不能呢只关注params参数，应该去看看原来有没有query参数
       //如果有就应该吧query参数也带上
@@ -62,12 +80,25 @@ export default {
       }
       let {query} = this.$route
       if(query){
-        console.log(this)
+        // console.log(this)
        localtion.query = query
       }
-      this.$router.push(localtion)
+      //判断是否从首页到search页
+      if(this.$route.path != '/home'){
+        this.$router.replace(localtion)
+      }else{
+        this.$router.push(localtion)
+      }
+    },
+    clearKeyword(){
+      this.keyword = ''
     }
-  }
+  },
+      computed:{
+      ...mapState({
+        userInfo:state => state.user.userInfo
+      })
+    }
 };
 </script>
 

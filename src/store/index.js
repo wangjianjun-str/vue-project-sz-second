@@ -1,6 +1,10 @@
 import Vue from "vue"
 import Vuex from "vuex"
 import home from "./home"
+import search from "./search"
+import detail from './detail'
+import shopcart from '@/store/shopcart'
+import user from "@/store/user"
 Vue.use(Vuex)
 
 const state = {};
@@ -12,5 +16,5 @@ export default new Vuex.Store({
   mutations,
   actions,
   getters,
-  modules:{home}
+  modules:{home,search,detail,shopcart,user}
 })

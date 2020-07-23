@@ -39,7 +39,6 @@ const actions = {
     const result = await requFloorList()
     
     if(result.code === 200){
-      console.log(1111111111)
       commit("RECEIVREFLOORLIST",result.data)
     }
   }
